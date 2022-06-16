@@ -1,9 +1,9 @@
-declare module 'virtual:vite-plugin-md-bridge' {
+declare module 'virtual:vite-plugin-md-data' {
   export interface MdData {
     path: string
     content: string
     frontmatter: Record<string, any>
   }
 
-  export const mdDatas: MdData[]
+  export const data: MdData[]
 }

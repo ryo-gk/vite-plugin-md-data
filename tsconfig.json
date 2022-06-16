@@ -9,6 +9,10 @@
     "moduleResolution": "Node",
     "resolveJsonModule": true
   },
+  "include": [
+    "src/**/*",
+    "*.d.ts"
+  ],
   "exclude": [
     "**/dist",
     "**/node_modules",

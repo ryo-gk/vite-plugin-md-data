@@ -3,7 +3,6 @@
 </template>
 
 <script setup lang="ts">
-import { useMdData } from '../src/helper'
-const d = useMdData()
-console.log(d)
+import { data } from 'virtual:vite-plugin-md-data'
+console.log(data)
 </script>

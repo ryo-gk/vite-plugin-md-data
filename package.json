@@ -1,21 +1,17 @@
 {
-  "name": "vite-plugin-md-bridge",
-  "version": "1.0.0",
+  "name": "vite-plugin-md-data",
+  "version": "0.1.0",
   "description": "",
   "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "pnpm run build:plugin && pnpm run build:client",
-    "build:plugin": "tsup src/index.ts --dts --format cjs,esm",
-    "build:client": "tsup src/helper.ts --dts --format cjs,esm",
+    "build": "tsup src/index.ts --dts --format cjs,esm",
     "dev": "vite"
   },
   "exports": {
     ".": "./dist/index.js"
   },
-  "files": [
-    "dist",
-    "client.d.ts"
-  ],
   "keywords": [],
   "author": "",
   "license": "MIT",

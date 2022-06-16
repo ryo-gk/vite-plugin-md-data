@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import { ViteMdBridge } from './src'
+import ViteMdData from './src'
 
 export default defineConfig({
   root: 'dev',
-  plugins: [vue(), ViteMdBridge({ path: './dev/posts/'})],
+  plugins: [vue(), ViteMdData({ path: './dev/posts/' })],
 })
