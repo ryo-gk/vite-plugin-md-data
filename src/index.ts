@@ -12,7 +12,6 @@ function ViteMdData(options: PluginOptions): Plugin {
 
   return {
     name: 'vite-plugin-md-data',
-    enforce: 'pre',
     resolveId(id) {
       if (id === virtualModuleId) {
         return resolvedVirtualModuleId
