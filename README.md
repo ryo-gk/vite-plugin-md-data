@@ -31,3 +31,18 @@ import { data } from 'virtual:vite-plugin-md-data'
 console.log(data)// [{ path: '...', frontmatter: { ... }, content: '' }, { ... }]
 </script>
 ```
+
+Also, this may be needed.
+
+```ts
+declare module 'virtual:vite-plugin-md-data' {
+  export interface MdData {
+    path: string
+    content: string
+    frontmatter: Record<string, any>
+  }
+
+  // If you pass the dataName options, you need to change the name to it.
+  export const data: MdData[]
+}
+```
