@@ -1,9 +1,13 @@
 {
   "name": "vite-plugin-md-data",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Access the markdown data",
   "author": "Ryosuke Kogure <ryo.gk55@gmail.com>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ryo-gk/vite-plugin-md-data"
+  },
   "keywords": [
     "vite",
     "vite-plugin",
@@ -17,7 +21,11 @@
     "dev": "vite"
   },
   "exports": {
-    ".": "./dist/index.js"
+    ".": {
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "types": "./dist/index.d.ts"
+    }
   },
   "dependencies": {
     "@types/node": "^17.0.40",
