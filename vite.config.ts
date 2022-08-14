@@ -4,5 +4,10 @@ import ViteMdData from './src'
 
 export default defineConfig({
   root: 'dev',
-  plugins: [vue(), ViteMdData({ path: './dev/posts/' })],
+  plugins: [
+    vue(),
+    ViteMdData({
+      path: './dev/posts/'
+    })
+  ],
 })

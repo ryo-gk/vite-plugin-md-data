@@ -1,9 +1,10 @@
 import type { Plugin } from 'vite'
-import { getMdData } from './markdown'
+import { getMdData, MdData } from './markdown'
 
 interface PluginOptions {
   path: string
   dataName?: string
+  callback?: (data: MdData[]) => MdData[]
 }
 
 function ViteMdData(options: PluginOptions): Plugin {
@@ -19,7 +20,8 @@ function ViteMdData(options: PluginOptions): Plugin {
     },
     load(id) {
       if (id === resolvedVirtualModuleId) {
-        const md = getMdData(options.path)
+        const md = options.callback ? getMdData(options.path, options.callback) : getMdData(options.path)
+
         return `export const ${options.dataName ?? 'data'} = ${JSON.stringify(md)}`
       }
     }

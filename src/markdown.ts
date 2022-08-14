@@ -2,7 +2,13 @@ import { Dirent } from "node:fs"
 import matter from 'gray-matter'
 import { readFileSync, readdirSync } from 'fs'
 
-export function getMdData(dir: string) {
+export interface MdData {
+  path: string
+  content: string
+  frontmatter: Record<string, any>
+}
+
+export function getMdData(dir: string, callback?: (data: MdData[]) => MdData[]): MdData[] {
   const dirPath = `${dir}`
   const fileNames = readdirSync(`${dirPath}`, { withFileTypes: true })
     .flatMap((dirent: Dirent) => {
@@ -20,7 +26,8 @@ export function getMdData(dir: string) {
       frontmatter
     }
   })
-  return data
+
+  return callback ? callback(data) : data
 }
 
 function extractFileName(fileName: string) {
