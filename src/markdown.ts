@@ -1,6 +1,7 @@
 import { Dirent } from "node:fs"
-import matter from 'gray-matter'
 import { readFileSync, readdirSync } from 'fs'
+import MarkdownIt from 'markdown-it'
+import matter from 'gray-matter'
 
 export interface MdData {
   path: string
@@ -8,7 +9,19 @@ export interface MdData {
   frontmatter: Record<string, any>
 }
 
-export function getMdData(dir: string, callback?: (data: MdData[]) => MdData[]): MdData[] {
+export interface GetMdDataOptions {
+  dir: string
+  asRaw: boolean
+  callback?: (data: MdData[]) => MdData[]
+}
+
+export function getMdData(options: GetMdDataOptions): MdData[] {
+  const {
+   dir,
+   asRaw,
+   callback
+  } = options
+
   const dirPath = `${dir}`
   const fileNames = readdirSync(`${dirPath}`, { withFileTypes: true })
     .flatMap((dirent: Dirent) => {
@@ -20,14 +33,20 @@ export function getMdData(dir: string, callback?: (data: MdData[]) => MdData[]):
     const relativePath = toRelativePath(`${dir}/${extractFileName(name)}`)
     const file = readFileSync(path)
     const { content, data: frontmatter } = matter(file)
+
     return {
       path: relativePath,
-      content,
+      content: asRaw ? content: render(content),
       frontmatter
     }
   })
 
   return callback ? callback(data) : data
+}
+
+function render(markdown: string) {
+  const mdi = new MarkdownIt()
+  return mdi.render(markdown)
 }
 
 function extractFileName(fileName: string) {

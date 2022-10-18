@@ -5,6 +5,7 @@ interface PluginOptions {
   path: string
   dataName?: string
   callback?: (data: MdData[]) => MdData[]
+  asRaw?: boolean
 }
 
 function ViteMdData(options: PluginOptions): Plugin {
@@ -20,7 +21,11 @@ function ViteMdData(options: PluginOptions): Plugin {
     },
     load(id) {
       if (id === resolvedVirtualModuleId) {
-        const md = options.callback ? getMdData(options.path, options.callback) : getMdData(options.path)
+        const md = getMdData({
+          dir: options.path,
+          callback: options.callback,
+          asRaw: options.asRaw ?? false
+        })
 
         return `export const ${options.dataName ?? 'data'} = ${JSON.stringify(md)}`
       }

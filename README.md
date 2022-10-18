@@ -28,7 +28,7 @@ And you can import path, frontmatter, and content via `virtual:vite-plugin-md-da
 <script setup>
 import { data } from 'virtual:vite-plugin-md-data'
 
-console.log(data)// [{ path: '...', frontmatter: { ... }, content: '' }, { ... }]
+console.log(data)// [{ path: '...', frontmatter: { ... }, content: '<h2>...</h2>...' }, { ... }]
 </script>
 ```
 

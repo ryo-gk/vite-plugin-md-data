@@ -5,7 +5,7 @@
       <p v-for="(v, k) in d.frontmatter" :key="k">
         {{ k }}: {{ v }}
       </p>
-      <p>{{ d.content }}</p>
+      <div v-html="d.content" />
     </div>
   </div>
 </template>

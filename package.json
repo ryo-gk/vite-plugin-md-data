@@ -30,9 +30,11 @@
   "dependencies": {
     "@types/node": "^17.0.40",
     "gray-matter": "^4.0.3",
+    "markdown-it": "^13.0.1",
     "vite": "^3.0.4"
   },
   "devDependencies": {
+    "@types/markdown-it": "^12.2.3",
     "@vitejs/plugin-vue": "^2.3.3",
     "tsup": "^6.1.0",
     "typescript": "^4.7.3",
