@@ -1,11 +1,14 @@
 import type { Plugin } from 'vite'
+import { writeFileSync } from 'fs'
 import { getMdData, MdData } from './markdown'
+import { getDeclaration } from './decralation'
 
 interface PluginOptions {
   path: string
   dataName?: string
   callback?: (data: MdData[]) => MdData[]
   asRaw?: boolean
+  declaration?: boolean
 }
 
 function ViteMdData(options: PluginOptions): Plugin {
@@ -14,6 +17,17 @@ function ViteMdData(options: PluginOptions): Plugin {
 
   return {
     name: 'vite-plugin-md-data',
+    buildStart() {
+      if (options.declaration) {
+        const declaration = getDeclaration({
+          dir: options.path,
+          callback: options.callback,
+          asRaw: options.asRaw ?? false
+        })
+
+        writeFileSync('./vite-plugin-md-data.d.ts', declaration);
+      }
+    },
     resolveId(id) {
       if (id === virtualModuleId) {
         return resolvedVirtualModuleId
