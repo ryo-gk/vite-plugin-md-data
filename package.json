@@ -18,7 +18,9 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsup src/index.ts --dts --format cjs,esm",
-    "dev": "vite"
+    "dev": "vite",
+    "preview": "vite preview",
+    "test": "vitest"
   },
   "exports": {
     ".": {
@@ -40,6 +42,7 @@
     "@vitejs/plugin-vue": "^2.3.3",
     "tsup": "^6.1.0",
     "typescript": "^4.7.3",
+    "vitest": "^0.25.3",
     "vue": "^3.2.36"
   }
 }

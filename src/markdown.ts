@@ -11,7 +11,7 @@ export interface MdData {
 
 export interface GetMdDataOptions {
   dir: string
-  asRaw: boolean
+  asRaw?: boolean
   callback?: (data: MdData[]) => MdData[]
 }
 

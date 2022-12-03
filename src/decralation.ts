@@ -21,9 +21,13 @@ function getDeclare() {
 function getMdDataType(options: GetMdDataOptions) {
   const md = getMdData(options)
 
-  const typeContent = getTypeContent(md[0])
+  const typeContent = getTypeFromObject(md[0])
 
-  return `export interface MdData {${typeContent}}`
+  return `export interface MdData ${typeContent}`
+}
+
+function getTypeFromObject(value: any) {
+  return `{${getTypeContent(value)}}`
 }
 
 function getTypeContent(value: any) {

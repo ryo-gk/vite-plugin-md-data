@@ -10,4 +10,7 @@ export default defineConfig({
       path: './dev/posts/'
     })
   ],
+  test: {
+    include: ['../test/**/*.spec.ts']
+  }
 })
