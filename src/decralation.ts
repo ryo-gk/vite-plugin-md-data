@@ -1,55 +1,47 @@
-import prettier from 'prettier'
+import { FileBuilder } from './file'
 import { getMdData, GetMdDataOptions } from './markdown'
 
-const MDDATA_INTERFACE_MARKER = '__MDDATE_INTERFACE__'
+const MARKER_MD_DATA = '__MARKER_MD_DATA__'
+const TEMPLATE_MODULE = `declare module 'virtual:vite-plugin-md-data' {
+  export interface MdData {
+    ${MARKER_MD_DATA}
+  }
 
-export function getDeclaration(options: GetMdDataOptions) {
-  const declare = getDeclare()
-  const mdDataType = getMdDataType(options)
+  export const data: MdData[]
+}`
 
-  return prettier.format(declare.replace(MDDATA_INTERFACE_MARKER, mdDataType), { semi: false, parser: 'typescript' })
+export interface GetDeclarationBuilderOptions extends GetMdDataOptions {
+  optional?: boolean
 }
 
-function getDeclare() {
-  return `declare module 'virtual:vite-plugin-md-data' {
-    ${MDDATA_INTERFACE_MARKER}
-
-    export const data: MdData[]
-  }`
-}
-
-function getMdDataType(options: GetMdDataOptions) {
+export function getDeclarationBuilder(options: GetDeclarationBuilderOptions) {
   const md = getMdData(options)
 
-  const typeContent = getTypeFromObject(md[0])
-
-  return `export interface MdData ${typeContent}`
+  return new FileBuilder(TEMPLATE_MODULE)
+    .set(MARKER_MD_DATA, getTypeContent(md[0], options.optional))
+    .format()
 }
 
-function getTypeFromObject(value: any) {
-  return `{${getTypeContent(value)}}`
-}
-
-function getTypeContent(value: any) {
+function getTypeContent(value: any, optional?: boolean) {
   let content = ''
   for (const key in value) {
-    content += `${key}: `
+    content += `${key}${optional ? '?:' : ':'} `
 
     if (Array.isArray((value as any)[key])) {
       content += isObject((value as any)[key])
-        ? `{${getTypeContent((value as any)[key])}}[],`
+        ? `{${getTypeContent((value as any)[key], optional)}}[],`
         : `${typeof (value as any)[key][0]}[],`
 
       continue
     }
 
     if (isDate((value as any)[key])) {
-      content += 'Date'
+      content += 'Date,'
       continue
     }
 
     if (isObject((value as any)[key])) {
-      content += `{${getTypeContent((value as any)[key])}},`
+      content += `{${getTypeContent((value as any)[key], optional)}},`
       continue
     }
 

@@ -19,6 +19,7 @@
   "scripts": {
     "build": "tsup src/index.ts --dts --format cjs,esm",
     "dev": "vite",
+    "format": "prettier src/ --check --write",
     "preview": "vite preview",
     "test": "vitest"
   },

@@ -1,14 +1,15 @@
 import type { Plugin } from 'vite'
-import { writeFileSync } from 'fs'
-import { getMdData, MdData } from './markdown'
-import { getDeclaration } from './decralation'
+import { getMdData, getMdDataBuilder, MdData } from './markdown'
+import { getDeclarationBuilder } from './decralation'
 
 interface PluginOptions {
   path: string
-  dataName?: string
   callback?: (data: MdData[]) => MdData[]
   asRaw?: boolean
-  declaration?: boolean
+  declaration?: {
+    optional?: boolean
+    outDir?: string
+  }
 }
 
 function ViteMdData(options: PluginOptions): Plugin {
@@ -18,14 +19,18 @@ function ViteMdData(options: PluginOptions): Plugin {
   return {
     name: 'vite-plugin-md-data',
     buildStart() {
-      if (options.declaration) {
-        const declaration = getDeclaration({
+      if (options?.declaration) {
+        const outDir =
+          (options.declaration?.outDir ?? './') + 'vite-plugin-md-data.d.ts'
+
+        const builder = getDeclarationBuilder({
           dir: options.path,
-          callback: options.callback,
-          asRaw: options.asRaw ?? false
+          callback: options?.callback,
+          asRaw: options?.asRaw ?? false,
+          optional: options.declaration?.optional
         })
 
-        writeFileSync('./vite-plugin-md-data.d.ts', declaration);
+        builder.generate(outDir)
       }
     },
     resolveId(id) {
@@ -35,13 +40,13 @@ function ViteMdData(options: PluginOptions): Plugin {
     },
     load(id) {
       if (id === resolvedVirtualModuleId) {
-        const md = getMdData({
+        const builder = getMdDataBuilder({
           dir: options.path,
           callback: options.callback,
           asRaw: options.asRaw ?? false
         })
 
-        return `export const ${options.dataName ?? 'data'} = ${JSON.stringify(md)}`
+        return builder.getTemplate()
       }
     }
   }

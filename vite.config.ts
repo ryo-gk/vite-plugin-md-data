@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import { defineConfig } from 'vite'
 import ViteMdData from './src'
 
 export default defineConfig({
@@ -7,7 +7,11 @@ export default defineConfig({
   plugins: [
     vue(),
     ViteMdData({
-      path: './dev/posts/'
+      path: './dev/posts/',
+      declaration: {
+        optional: true,
+        outDir: './dev/'
+      }
     })
   ],
   test: {
