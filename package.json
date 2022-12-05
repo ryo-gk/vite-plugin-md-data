@@ -21,6 +21,7 @@
     "dev": "vite",
     "format": "prettier src/ --check --write",
     "preview": "vite preview",
+    "release": "node --experimental-json-modules script/release.js",
     "test": "vitest"
   },
   "exports": {
@@ -33,6 +34,7 @@
   "dependencies": {
     "@types/node": "^17.0.40",
     "@types/prettier": "^2.7.1",
+    "execa": "^6.1.0",
     "gray-matter": "^4.0.3",
     "markdown-it": "^13.0.1",
     "prettier": "^2.8.0",

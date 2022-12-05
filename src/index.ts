@@ -1,5 +1,5 @@
 import type { Plugin } from 'vite'
-import { getMdData, getMdDataBuilder, MdData } from './markdown'
+import { getMdDataBuilder, MdData } from './markdown'
 import { getDeclarationBuilder } from './decralation'
 
 interface PluginOptions {
@@ -7,7 +7,6 @@ interface PluginOptions {
   callback?: (data: MdData[]) => MdData[]
   asRaw?: boolean
   declaration?: {
-    optional?: boolean
     outDir?: string
   }
 }
@@ -26,8 +25,7 @@ function ViteMdData(options: PluginOptions): Plugin {
         const builder = getDeclarationBuilder({
           dir: options.path,
           callback: options?.callback,
-          asRaw: options?.asRaw ?? false,
-          optional: options.declaration?.optional
+          asRaw: options?.asRaw ?? false
         })
 
         builder.generate(outDir)

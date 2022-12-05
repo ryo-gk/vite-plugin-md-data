@@ -10,26 +10,22 @@ const TEMPLATE_MODULE = `declare module 'virtual:vite-plugin-md-data' {
   export const data: MdData[]
 }`
 
-export interface GetDeclarationBuilderOptions extends GetMdDataOptions {
-  optional?: boolean
-}
-
-export function getDeclarationBuilder(options: GetDeclarationBuilderOptions) {
+export function getDeclarationBuilder(options: GetMdDataOptions) {
   const md = getMdData(options)
 
   return new FileBuilder(TEMPLATE_MODULE)
-    .set(MARKER_MD_DATA, getTypeContent(md[0], options.optional))
+    .set(MARKER_MD_DATA, getTypeContent(md[0]))
     .format()
 }
 
-function getTypeContent(value: any, optional?: boolean) {
+function getTypeContent(value: any) {
   let content = ''
   for (const key in value) {
-    content += `${key}${optional ? '?:' : ':'} `
+    content += `${key}: `
 
     if (Array.isArray((value as any)[key])) {
       content += isObject((value as any)[key])
-        ? `{${getTypeContent((value as any)[key], optional)}}[],`
+        ? `{${getTypeContent((value as any)[key])}}[],`
         : `${typeof (value as any)[key][0]}[],`
 
       continue
@@ -41,7 +37,7 @@ function getTypeContent(value: any, optional?: boolean) {
     }
 
     if (isObject((value as any)[key])) {
-      content += `{${getTypeContent((value as any)[key], optional)}},`
+      content += `{${getTypeContent((value as any)[key])}},`
       continue
     }
 
