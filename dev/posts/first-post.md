@@ -1,6 +1,6 @@
 ---
 date: 2022-01-01
-title: First post 
+title: First post
 ---
 ## First post
 This is the first post.

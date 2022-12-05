@@ -17,7 +17,14 @@ import ViteMdData from 'vite-plugin-md-data'
 export default {
   plugins: [
     vue(),
-    ViteMdData({ path: './dev/posts/' })
+    ViteMdData({ 
+      path: './dev/posts/',
+      callback: (data) => data.filter(d => d.publised === true), // Callback to process for markdown data.
+      asRaw: false, // Not parse the content to HTML if `true`.
+      declaration: { // Generate d.ts file.
+        outDir: './types/' // Path to which generate a declaration.
+      }
+    })
   ]
 }
 ```
@@ -33,16 +40,3 @@ console.log(data)// [{ path: '...', frontmatter: { ... }, content: '<h2>...</h2>
 ```
 
 Also, this may be needed.
-
-```ts
-declare module 'virtual:vite-plugin-md-data' {
-  export interface MdData {
-    path: string
-    content: string
-    frontmatter: Record<string, any>
-  }
-
-  // If you pass the dataName options, you need to change the name to it.
-  export const data: MdData[]
-}
-```
