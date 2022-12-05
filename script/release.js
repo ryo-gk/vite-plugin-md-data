@@ -1,5 +1,5 @@
 import { execa } from 'execa'
-import pkg from '../package.json'
+import pkg from '../package.json' assert { type: "json" }
 
 const run = (bin, args, opts = {}) => execa(bin, args, { stdio: 'inherit', ...opts })
 
