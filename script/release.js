@@ -1,5 +1,5 @@
-import { execa } from 'execa'
-import pkg from '../package.json'
+const { execa } = require('execa')
+const pkg = require('../package.json')
 
 const run = (bin, args, opts = {}) => execa(bin, args, { stdio: 'inherit', ...opts })
 
