@@ -21,27 +21,25 @@ export function getDeclarationBuilder(options: GetMdDataOptions) {
 function getTypeContent(value: any) {
   let content = ''
   for (const key in value) {
+    const val = (value as any)[key]
     content += `${key}: `
 
-    if (Array.isArray((value as any)[key])) {
-      content += isObject((value as any)[key])
-        ? `{${getTypeContent((value as any)[key])}}[],`
-        : `${typeof (value as any)[key][0]}[],`
-
+    if (Array.isArray(val)) {
+      content += `${getArrayElementType(val)},`
       continue
     }
 
-    if (isDate((value as any)[key])) {
+    if (isDate(val)) {
       content += 'Date,'
       continue
     }
 
-    if (isObject((value as any)[key])) {
-      content += `{${getTypeContent((value as any)[key])}},`
+    if (isObject(val)) {
+      content += `{${getTypeContent(val)}},`
       continue
     }
 
-    content += `${typeof (value as any)[key]},`
+    content += `${typeof val},`
   }
 
   return content
@@ -58,4 +56,20 @@ function isDate(value: any) {
 function getObjectType(value: any) {
   const toString = Object.prototype.toString
   return toString.call(value).slice(8, -1)
+}
+
+function getArrayElementType(value: any): any {
+  if (Array.isArray(value)) {
+    return `${getArrayElementType(value[0])}[]`
+  }
+
+  if (isObject(value)) {
+    return `{${getTypeContent(value)}}`
+  }
+
+  if (isDate(value)) {
+    return 'Date'
+  }
+
+  return typeof value
 }

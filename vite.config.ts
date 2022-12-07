@@ -9,7 +9,6 @@ export default defineConfig({
     ViteMdData({
       path: './dev/posts/',
       declaration: {
-        optional: true,
         outDir: './dev/'
       }
     })
