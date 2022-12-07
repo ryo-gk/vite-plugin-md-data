@@ -17,7 +17,7 @@ describe('declaration', async () => {
   })
 
   afterAll(() => {
-    //rmdirSync(ACTUAL_DIR, { recursive: true })
+    rmdirSync(ACTUAL_DIR, { recursive: true })
   })
 
   it('should generate declaration file', () => {
