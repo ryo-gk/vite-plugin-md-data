@@ -2,7 +2,9 @@ import type { Plugin } from 'vite'
 import { getMdDataBuilder, MdData } from './markdown'
 import { getDeclarationBuilder } from './decralation'
 
-interface PluginOptions {
+export { MdData }
+
+export interface PluginOptions {
   path: string
   callback?: (data: MdData[]) => MdData[]
   asRaw?: boolean
