@@ -4,7 +4,6 @@
   "description": "Access the markdown data",
   "author": "Ryosuke Kogure <ryo.gk55@gmail.com>",
   "license": "MIT",
-  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/ryo-gk/vite-plugin-md-data"
