@@ -21,7 +21,7 @@
     "dev": "vite",
     "format": "prettier src/ --check --write",
     "preview": "vite preview",
-    "release": "node --experimental-json-modules script/release.js",
+    "release": "node script/release.js",
     "test": "vitest"
   },
   "exports": {

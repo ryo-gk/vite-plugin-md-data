@@ -1,8 +1,9 @@
 import { execa } from 'execa'
-import pkg from '../package.json' assert { type: "json" }
+import { readFileSync } from 'fs'
 
 const run = (bin, args, opts = {}) => execa(bin, args, { stdio: 'inherit', ...opts })
 
+const pkg = JSON.parse(readFileSync('package.json', 'utf-8'))
 const version = pkg.version
 
 await run('pnpm', ['run', 'build'])
